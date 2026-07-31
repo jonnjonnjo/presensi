@@ -31,7 +31,7 @@ model RecordPresensi {
   user Karyawan @relation(fields:[userId],references:[id]) 
   userId String
   attendance_date DateTime @default(now()) @db.Date
-  check_in DateTime @default(now())
+  check_in DateTime @default(now()) @db.Time
   check_out DateTime? 
   status StatusPresensi
   notes String?
