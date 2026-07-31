@@ -1,5 +1,4 @@
 import type { Request, Response, NextFunction } from "express"
-import { error } from "node:console";
 
 export function validateAttendance(req: Request, res: Response, next: NextFunction) {
   const errors: Record<string, string[]> = {};
@@ -24,7 +23,9 @@ export function validateAttendance(req: Request, res: Response, next: NextFuncti
   }
 
   if (Object.keys(errors).length > 0) {
-    res.status(422).json({ sucess: false, message: "Validation Failed", errors })
+    res.status(422).json({ success: false, message: "Validation Failed", errors })
     return
   }
+
+  next()
 }

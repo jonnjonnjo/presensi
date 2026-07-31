@@ -1,19 +1,16 @@
 import express from "express"
+import { attendanceRouter } from "./routes/attendances.js"
 
 const app = express()
 const port = 6767
 
 
 app.use(express.json())
+app.use("/attendances", attendanceRouter)
 
 
 app.get("/", (_req, res) => {
   res.json({ message: "TEST" })
-})
-
-
-app.get("/attendances", (_req, res) => {
-  res.json("HERE")
 })
 
 app.listen(port, () => {
