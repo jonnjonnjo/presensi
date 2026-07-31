@@ -1,4 +1,5 @@
-const express = require("express")
+import express from "express"
+
 const app = express()
 const port = 6767
 
@@ -6,7 +7,7 @@ const port = 6767
 app.use(express.json())
 
 
-app.get("/", (req, res) => {
+app.get("/", (_req, res) => {
   res.json({ message: "TEST" })
 })
 
