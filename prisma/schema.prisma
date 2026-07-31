@@ -18,33 +18,47 @@ datasource db {
   provider = "postgresql"
 }
 
-model Karyawan {
-  id  String @id @default(uuid())
-  employee_name String 
-  daftarPresensi RecordPresensi[]
-  role Role
-
-}
+// model Karyawan {
+//   id  String @id @default(uuid())
+//   employee_name String 
+//   daftarPresensi RecordPresensi[]
+//   role Role
+//
+// }
+//
+// model RecordPresensi {
+//   id  String @id @default(uuid())
+//   user Karyawan @relation(fields:[userId],references:[id]) 
+//   userId String
+//   attendance_date DateTime @default(now()) @db.Date
+//   check_in DateTime @default(now()) @db.Time
+//   check_out DateTime? 
+//   status StatusPresensi
+//   notes String?
+//   created_at  DateTime @default(now())
+//   updated_at  DateTime @updatedAt
+//   
+//   @@unique([userId,attendance_date])
+// }
 
 model RecordPresensi {
   id  String @id @default(uuid())
-  user Karyawan @relation(fields:[userId],references:[id]) 
-  userId String
+  employee_name String
   attendance_date DateTime @default(now()) @db.Date
-  check_in DateTime @default(now()) @db.Time
-  check_out DateTime? 
+  check_in DateTime?  @db.Time
+  check_out DateTime? @db.Time
   status StatusPresensi
   notes String?
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
   
-  @@unique([userId,attendance_date])
+  @@unique([employee_name,attendance_date])
 }
 
-enum Role {
-  ADMIN 
-  WORKER
-}
+// enum Role {
+//   ADMIN 
+//   WORKER
+// }
 
 enum StatusPresensi {
  PRESENT 
