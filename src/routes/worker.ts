@@ -266,24 +266,31 @@ workerRouter.put("/attendance/:id", async (req, res) => {
  *     parameters:
  *       - in: query
  *         name: page
+ *         required: false
  *         schema: { type: integer, default: 1 }
  *       - in: query
  *         name: limit
+ *         required: false
  *         schema: { type: integer, default: 10, maximum: 100 }
  *       - in: query
  *         name: status
+ *         required: false
  *         schema: { type: string, enum: [PRESENT, SICK, LEAVE, ABSENT] }
  *       - in: query
  *         name: start_date
+ *         required: false
  *         schema: { type: string, format: date }
  *       - in: query
  *         name: end_date
+ *         required: false
  *         schema: { type: string, format: date }
  *       - in: query
  *         name: sort_by
+ *         required: false
  *         schema: { type: string, enum: [attendance_date, check_in, check_out, status, created_at] }
  *       - in: query
  *         name: order
+ *         required: false
  *         schema: { type: string, enum: [asc, desc], default: desc }
  *     responses:
  *       200:

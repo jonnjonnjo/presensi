@@ -95,3 +95,8 @@ npm run dev -> change later into assuming production
 
 ## Kendala yang ditemui 
 Berdasarkan 
+Kebanyakan kendala-kendala yang saya temui hanyalah berdasarkan pada hal-hal yang tidak disebutkan secara eksplisit pada dokumen technical test. 
+Berikut adalah asumsi-asumsi yang saya buat 
+1. Saya melakukan normalization pada skema database yang dibuat menjadi 2 table yaitu User dan Presensi 
+2. Saya mengasumsikan penggunaan-pengunaan nantinya
+3. Timezone 

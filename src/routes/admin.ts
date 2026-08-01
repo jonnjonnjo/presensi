@@ -17,35 +17,45 @@ const ALLOWED_STATUS = Object.values(StatusPresensi) as readonly string[]
  *     parameters:
  *       - in: query
  *         name: page
+ *         required: false
  *         schema: { type: integer, default: 1 }
  *       - in: query
  *         name: limit
+ *         required: false
  *         schema: { type: integer, default: 10, maximum: 100 }
  *       - in: query
  *         name: status
+ *         required: false
  *         schema: { type: string, enum: [PRESENT, SICK, LEAVE, ABSENT] }
  *       - in: query
  *         name: start_date
+ *         required: false
  *         schema: { type: string, format: date }
  *       - in: query
  *         name: end_date
+ *         required: false
  *         schema: { type: string, format: date }
  *       - in: query
  *         name: sort_by
+ *         required: false
  *         schema: { type: string, enum: [attendance_date, check_in, check_out, status, created_at] }
  *       - in: query
  *         name: order
+ *         required: false
  *         schema: { type: string, enum: [asc, desc], default: desc }
  *       - in: query
  *         name: search
  *         description: Search by employee name
+ *         required: false
  *         schema: { type: string }
  *       - in: query
  *         name: karyawan_id
+ *         required: false
  *         schema: { type: string }
  *       - in: query
  *         name: show_deleted
  *         description: Include soft-deleted records
+ *         required: false
  *         schema: { type: string, enum: ["true"] }
  *     responses:
  *       200:
