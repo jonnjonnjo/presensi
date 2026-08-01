@@ -101,12 +101,33 @@ npm run test
 
 ## Penjelasan Desain Aplikasi 
 
+Aplikasi ini memiliki dua role: Worker dan Admin. Worker hanya dapat
+melihat dan mengelola presensinya sendiri. Admin dapat melihat dan
+mengelola seluruh data presensi. 
+
 ### Database Scheme
+Berikut adalah skema dari database yang akan dipakai. Justifikasi pemilihan skema dan tipe data dijelaskan pada bagian [Kendala yang ditemui](#kendala-yang-ditemui).
 ![Database ERD](./assets/ERD.svg)
 
-### System Design 
+### System Design
 
-### What else? 
+```mermaid
+flowchart LR
+    Client[Client] --> Server[Express Server]
+    Server --> Prisma[Prisma ORM]
+    
+    subgraph Docker[Docker]
+        DB[(PostgreSQL)]
+    end
+    
+    Prisma --> DB
+```
+
+Request mengalir dari client melalui Morgan (HTTP logging), Express (routing), ke middleware autentikasi JWT. Jika token valid, `req.user` diisi dengan `{ id, role }` dari payload JWT. Worker router menangani endpoint untuk melihat dan mengelola presensi sendiri. Admin router (dengan `requireRole("ADMIN")`) menangani endpoint untuk melihat dan mengelola seluruh data presensi.
+
+Kedua router menggunakan Prisma ORM sebagai lapisan query ke PostgreSQL yang berjalan di Docker container (port `5433` host → `5432` container). Response dikembalikan dalam format konsisten `{ success, message, data }` melalui helper `success()` dan `fail()`.
+
+### What else?  idk. what else? 
 
 ## Kendala yang ditemui 
 Berdasarkan 
