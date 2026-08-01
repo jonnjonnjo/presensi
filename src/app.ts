@@ -1,3 +1,4 @@
+import "dotenv/config"
 import express from "express"
 import { attendanceRouter } from "./routes/attendances.js"
 import swaggerUi from "swagger-ui-express"

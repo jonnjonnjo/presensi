@@ -9,6 +9,7 @@ const adapter = new PrismaPg({
 const prisma = new PrismaClient({ adapter })
 
 async function main() {
+  await prisma.recordPresensi.deleteMany();
   await prisma.recordPresensi.createMany({
     data: [
       { employee_name: "John Doe", attendance_date: new Date("2026-07-31"), check_in: new Date("2026-07-31T08:00:00"), check_out: new Date("2026-07-31T17:00:00"), status: "PRESENT" },
@@ -27,7 +28,7 @@ async function main() {
 }
 
 
-main().then(() => prisma.$disconnect).catch((e) => {
+main().then(() => prisma.$disconnect()).catch((e) => {
   console.error(e);
   process.exit(1)
 })

@@ -10,5 +10,5 @@ export const swaggerSpec = swaggerJSDoc({
     },
     servers: [{ url: "http://localhost:6767" }]
   },
-  apis: ["../src/routes/*.ts"]
+  apis: ["./src/routes/*.ts"]
 })

@@ -2,7 +2,7 @@ import { Router } from "express";
 import { prisma } from "../lib/prisma.js";
 import { Prisma } from "../generated/prisma/client.js"
 import { fail, success } from "../utils/response.js";
-import { validateAttendance } from "../middleware/validate.js";
+import { validateAttendance, validateAttendanceUpdate } from "../middleware/validate.js";
 
 export const attendanceRouter = Router()
 
@@ -117,7 +117,14 @@ attendanceRouter.get("/:id", async (req, res) => {
  */
 attendanceRouter.post("/", validateAttendance, async (req, res) => {
   try {
-    const data = req.body;
+    // const data = req.body;
+    const data = {
+      ...req.body,
+      attendance_date: new Date(req.body.attendance_date),
+      check_in: req.body.check_in ? new Date(`1970-01-01T${req.body.check_in}`) : undefined,
+      check_out: req.body.check_out ? new Date(`1970-01-01T${req.body.check_out}`) : undefined,
+    }
+
     const record = await prisma.recordPresensi.create({ data })
     success(res, "Attendance created successfully", record, 201)
   } catch (err) {
@@ -146,11 +153,13 @@ attendanceRouter.post("/", validateAttendance, async (req, res) => {
  *           schema:
  *             type: object
  *             properties:
- *               employee_name: { type: string }
- *               attendance_date: { type: string, format: date }
  *               check_in: { type: string, format: time }
  *               check_out: { type: string, format: time }
- *               status: { type: string, enum: [PRESENT, SICK, LEAVE, ABSENT] }
+ *               status: { 
+ *                  type: string, 
+ *                  enum: [PRESENT, SICK, LEAVE, ABSENT],
+ *                  description: "If status is PRESENT, check_in must also be provided"
+ *               }
  *               notes: { type: string }
  *     responses:
  *       200:
@@ -160,10 +169,15 @@ attendanceRouter.post("/", validateAttendance, async (req, res) => {
  *       422:
  *         description: Validation failed
  */
-attendanceRouter.put("/:id", validateAttendance, async (req, res) => {
+attendanceRouter.put("/:id", validateAttendanceUpdate, async (req, res) => {
   try {
-    const data = req.body;
     const id = req.params.id as string;
+    const data = {
+      ...req.body,
+      ...(req.body.attendance_date ? { attendance_date: new Date(req.body.attendance_date) } : {}),
+      ...(req.body.check_in ? { check_in: new Date(`1970-01-01T${req.body.check_in}`) } : {}),
+      ...(req.body.check_out ? { check_out: new Date(`1970-01-01T${req.body.check_out}`) } : {}),
+    }
 
     const recordUpdate = await prisma.recordPresensi.update({
       where: { id },
