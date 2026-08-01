@@ -1,4 +1,4 @@
-# Project 
+# Pusdatik Kemnaker Attendance
 
 ## Cara Menjalankan 
 1. Clone repository ini terlebih dahulu 
@@ -123,23 +123,17 @@ flowchart LR
     Prisma --> DB
 ```
 
-Request mengalir dari client melalui Morgan (HTTP logging), Express (routing), ke middleware autentikasi JWT. Jika token valid, `req.user` diisi dengan `{ id, role }` dari payload JWT. Worker router menangani endpoint untuk melihat dan mengelola presensi sendiri. Admin router (dengan `requireRole("ADMIN")`) menangani endpoint untuk melihat dan mengelola seluruh data presensi.
 
-Kedua router menggunakan Prisma ORM sebagai lapisan query ke PostgreSQL yang berjalan di Docker container (port `5433` host → `5432` container). Response dikembalikan dalam format konsisten `{ success, message, data }` melalui helper `success()` dan `fail()`.
-
-### What else?  idk. what else? 
 
 ## Kendala yang ditemui 
-Berdasarkan 
 Kebanyakan kendala-kendala yang saya temui hanyalah berdasarkan pada hal-hal yang tidak disebutkan secara eksplisit pada dokumen technical test. 
 Berikut adalah asumsi-asumsi yang saya buat 
-1. Saya melakukan normalization pada skema database yang dibuat menjadi 2 table yaitu User dan Presensi 
-2. Saya mengasumsikan penggunaan-pengunaan nantinya
-3. Timezone 
-4. Pagination 
-5. Asumsi urusan account-management bukan termasuk dalam scope pengembangan
-6. Logging details 
-7. Check-in Check-out on server or on client? 
-8. Assume that we are on WIB 
-9. Asumsi check-in check-out 1 hari 
-10. Unique[employee_id,attendance_date] bug with the soft-delete -> enforced by requiring one to restore it first
+1. Saya melakukan normalization pada skema database yang dibuat menjadi 2 table yaitu User dan Presensi. Hal ini dikarenakan fungsi-fungsi bonus lainnya akan lebih mudah diimplementasikan jikalau database sudah dinormalisasi seperti pada bonus JWT ataupun bonus searching.
+2. Saya mengasumsikan penggunaan-pengunaan nantinya akan dibedakan berdasarkan user dan admin. akan dibedakan berdasarkan user dan admin.
+3. Saya asumsikan bahwa server akan di-host pada GMT+7 atau WIB sehingga saya secara eksplisit melakukan deklarasi pada docker untuk menggunakan GMT+7. 
+4. Pagination, Filter & Searching, serta sorting akan lebih mudah dilakukan jika tabel yang awalnya hanya cuma 1 di-normalize menjadi 2. JWT juga akan lebih mudah di-manage apabila terdapat tabel User sendiri.
+5. Saya asumsikan urusan account management pada table User bukanlah termasuk dalam scope ini 
+6. Logging details saya buat dalam layar abstraksi setinggi mungkin, yaitu morgen('tiny'), dikarenakan saya hanya bisa membaca logging pada level tersebut.
+7. Saya asumsikan bahwa lag/delay antar request dari client->server sekecil mungkin sehingga server dapat menggunakan waktu-bawaan untuk mengisi check-in dan check-out pada attribute di tabel.
+9. Saya asumsikan check-in dan check-out hanya dapat terjadi pada satu hari yang sama sehingga kolom tersebut hanya menyimpan jam:detik saja
+10. Akibat dari bonus soft-delete, setiap request yang ingin membuat request yang sebelumnya pernah di-delete maka harus melakukan proses `restore`. Hal ini karena terdapat conflict antara soft-delete yang tidak menghapus record serta rules  Unique[employee_id,attendance_date]
