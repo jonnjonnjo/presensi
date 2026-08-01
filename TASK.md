@@ -76,7 +76,7 @@ prisma.config.ts
 
 ## Execution Order
 1. [x] MVP — flat schema (baseline branch)
-2. [ ] Schema — normalize to Karyawan + Presensi → migrate → seed
+2. [x] Schema — normalize to Karyawan + Presensi → migrate → seed
 3. [ ] Auth — login, JWT middleware, role middleware
 4. [ ] Worker routes — check-in, check-out, attendance CRUD
 5. [ ] Admin routes — full CRUD on all records
