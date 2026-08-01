@@ -20,11 +20,11 @@ cp .env.example .env
 ``` 
 npm i 
 ```
-5. Jalankan `migration` terlebih dahulu untuk mengisi database PSql tersebut 
+5. Jalankan migration terlebih dahulu untuk mengisi database PSql tersebut 
 ```
 npx prisma migrate dev
 ```
-6. Jalankan `seeding` untuk mengisi database tersebut dengan data dummy 
+6. Jalankan seeding untuk mengisi database tersebut dengan data dummy 
 ``` 
 npx prisma db seed
 ```
@@ -49,15 +49,15 @@ npm run test
 
 ## Teknologi yang digunakan 
 1. `Node.js` dengan Express framework sebagai framework Backend 
-2. `Typescript` untuk membantu type-safety ketika pemgembangan aplikasi
+2. `Typescript` untuk membantu type-safety ketika pengembangan aplikasi
 3. `PostgreSQL` sebagai database 
 4. `Prisma ORM` sebagai ORM untuk mempermudah pengembangan fitur-fitur yang terkait langsung dengan database 
 5. `Morgan` untuk logging 
 6. `Docker` untuk menjalankan PostgreSQl. Hal ini lebih mudah dibandingkan menggunakan PostgreSQL secara native 
-7. `Vitest` untuk unit testing 
+7. `Vitest` dan `supertest` untuk melakukan unit testing 
 8. `JWT` (jsonwebtoken) untuk membantu autentikasi user 
 9. `Swagger` (swagger-jsdoc + swagger-ui-express) untuk membantu dokumentasi serta testing API 
-`10.` bcryptjs (hashing) untuk melakukan hashing pada kredentials JWT 
+10. `bcryptjs` (hashing) untuk melakukan hashing password user
 11. `tsx` untuk melakukan running kode typescript 
 
 
