@@ -117,12 +117,14 @@ attendanceRouter.get("/:id", async (req, res) => {
  */
 attendanceRouter.post("/", validateAttendance, async (req, res) => {
   try {
-    // const data = req.body;
+    const { employee_name, attendance_date, check_in, check_out, status, notes } = req.body
     const data = {
-      ...req.body,
-      attendance_date: new Date(req.body.attendance_date),
-      check_in: req.body.check_in ? new Date(`1970-01-01T${req.body.check_in}`) : undefined,
-      check_out: req.body.check_out ? new Date(`1970-01-01T${req.body.check_out}`) : undefined,
+      attendance_date: new Date(attendance_date),
+      ...(check_in ? { check_in: new Date(`1970-01-01T${check_in}`) } : {}),
+      ...(check_out ? { check_out: new Date(`1970-01-01T${check_out}`) } : {}),
+      employee_name: employee_name,
+      status: status,
+      notes: notes
     }
 
     const record = await prisma.recordPresensi.create({ data })
@@ -172,11 +174,12 @@ attendanceRouter.post("/", validateAttendance, async (req, res) => {
 attendanceRouter.put("/:id", validateAttendanceUpdate, async (req, res) => {
   try {
     const id = req.params.id as string;
+    const { check_in, check_out, status, notes } = req.body
     const data = {
-      ...req.body,
-      ...(req.body.attendance_date ? { attendance_date: new Date(req.body.attendance_date) } : {}),
-      ...(req.body.check_in ? { check_in: new Date(`1970-01-01T${req.body.check_in}`) } : {}),
-      ...(req.body.check_out ? { check_out: new Date(`1970-01-01T${req.body.check_out}`) } : {}),
+      ...(check_in ? { check_in: new Date(`1970-01-01T${check_in}`) } : {}),
+      ...(check_out ? { check_out: new Date(`1970-01-01T${check_out}`) } : {}),
+      status: status,
+      notes: notes
     }
 
     const recordUpdate = await prisma.recordPresensi.update({
