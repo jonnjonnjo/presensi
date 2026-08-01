@@ -10,7 +10,7 @@ import { adminRouter } from "./routes/admin.js"
 import morgan from "morgan"
 
 const app = express()
-const port = 6767
+const port = process.env.PORT || 6767
 
 app.use(morgan("combined"))
 app.use(express.json())

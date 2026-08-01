@@ -8,7 +8,7 @@ export const swaggerSpec = swaggerJSDoc({
       version: "1.0.0",
       description: "REST API for employee attendance"
     },
-    servers: [{ url: "http://localhost:6767" }],
+    servers: [{ url: `http://localhost:${process.env.PORT || 6767}` }],
     components: {
       securitySchemes: {
         bearerAuth: {
