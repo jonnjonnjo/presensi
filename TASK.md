@@ -82,6 +82,6 @@ prisma.config.ts
 5. [x] Admin routes — full CRUD on all records
 6. [x] GET attendance — pagination, filtering, search, sorting
 7. [x] Soft delete — deleted_at + restore endpoint
-8. [ ] Morgan logging
+8. [x] Morgan logging
 9. [x] Swagger annotations
-10. [ ] Unit tests (Vitest)
+10. [x] Unit tests (Vitest)
