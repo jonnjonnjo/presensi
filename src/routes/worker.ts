@@ -124,8 +124,10 @@ workerRouter.post("/attendance/:id/check-out", async (req, res) => {
  *               status:
  *                 type: string
  *                 enum: [SICK, LEAVE, ABSENT]
+ *                 example: SICK
  *               notes:
  *                 type: string
+ *                 example: Demam
  *     responses:
  *       201:
  *         description: Created
@@ -184,8 +186,10 @@ workerRouter.post("/attendance", async (req, res) => {
  *               status:
  *                 type: string
  *                 enum: [PRESENT, SICK, LEAVE, ABSENT]
+ *                 example: LEAVE
  *               notes:
  *                 type: string
+ *                 example: Changed my mind
  *     responses:
  *       200:
  *         description: OK

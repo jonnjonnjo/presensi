@@ -1,0 +1,50 @@
+.
+├── assets
+│   └── ERD.svg
+├── docker-compose.yml
+├── package.json
+├── package-lock.json
+├── prisma
+│   ├── migrations
+│   │   ├── 20260731062215_init
+│   │   ├── 20260731063003_init
+│   │   ├── 20260731063523_init
+│   │   ├── 20260731085950_enforce_one_attendance_per_day
+│   │   ├── 20260731091021_edit_authority
+│   │   ├── 20260731094448_force_time
+│   │   ├── 20260731102730_simplify_schema
+│   │   ├── 20260801042911_normalize_schema
+│   │   └── migration_lock.toml
+│   ├── schema.prisma
+│   └── seed.ts
+├── prisma.config.ts
+├── README.md
+├── skills-lock.json
+├── src
+│   ├── app.ts
+│   ├── generated
+│   │   └── prisma
+│   ├── lib
+│   │   └── prisma.ts
+│   ├── middleware
+│   │   ├── auth.ts
+│   │   └── roles.ts
+│   ├── routes
+│   │   ├── admin.ts
+│   │   ├── auth.ts
+│   │   └── worker.ts
+│   ├── swagger.ts
+│   ├── __tests__
+│   │   ├── routes
+│   │   └── utils
+│   ├── types
+│   │   └── express.d.ts
+│   └── utils
+│       └── response.ts
+├── structure.txt
+├── TASK.md
+├── THOUGHTS.md
+├── tsconfig.json
+└── vitest.config.ts
+
+23 directories, 25 files

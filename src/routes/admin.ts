@@ -158,20 +158,26 @@ adminRouter.get("/attendance/:id", async (req, res) => {
  *             properties:
  *               karyawan_id:
  *                 type: string
+ *                 example: "550e8400-e29b-41d4-a716-446655440000"
  *               status:
  *                 type: string
  *                 enum: [PRESENT, SICK, LEAVE, ABSENT]
+ *                 example: PRESENT
  *               attendance_date:
  *                 type: string
  *                 format: date
+ *                 example: "2026-07-31"
  *               check_in:
  *                 type: string
  *                 format: time
+ *                 example: "08:00:00"
  *               check_out:
  *                 type: string
  *                 format: time
+ *                 example: "17:00:00"
  *               notes:
  *                 type: string
+ *                 example: Late arrival
  *     responses:
  *       201:
  *         description: Created
@@ -251,8 +257,10 @@ adminRouter.post("/attendance", async (req, res) => {
  *               status:
  *                 type: string
  *                 enum: [PRESENT, SICK, LEAVE, ABSENT]
+ *                 example: SICK
  *               notes:
  *                 type: string
+ *                 example: Updated by admin
  *     responses:
  *       200:
  *         description: OK

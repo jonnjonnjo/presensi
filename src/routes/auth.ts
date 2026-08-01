@@ -23,8 +23,13 @@ export const authRouter = Router()
  *             type: object
  *             required: [email, password]
  *             properties:
- *               email: { type: string, format: email }
- *               password: { type: string }
+ *               email: 
+ *                type: string
+ *                format: email
+ *                example: john@example.com
+ *               password: 
+ *                type: string
+ *                example: kemnaker
  *     responses:
  *       200:
  *         description: Login successful
