@@ -71,6 +71,10 @@ adminRouter.get("/attendance", async (req, res) => {
     const limit = Math.min(100, Math.max(1, parseInt(req.query.limit as string) || 10))
     const { status, start_date, end_date, sort_by, order, search, karyawan_id, show_deleted } = req.query
 
+    if (start_date && end_date && new Date(start_date as string) > new Date(end_date as string)) {
+      return fail(res, "start_date cannot be later than end_date", undefined, 422)
+    }
+
     const where: Prisma.PresensiWhereInput = {}
 
     if (show_deleted !== "true") where.deleted_at = null
@@ -109,7 +113,11 @@ adminRouter.get("/attendance", async (req, res) => {
       prisma.presensi.count({ where }),
     ])
 
-    success(res, "Attendances retrieved successfully", {
+    const msg = records.length > 0
+      ? "Attendances retrieved successfully"
+      : "No attendances found matching the criteria"
+
+    success(res, msg, {
       data: records,
       pagination: { page, limit, total, totalPages: Math.ceil(total / limit) },
     })
