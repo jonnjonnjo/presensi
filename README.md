@@ -41,16 +41,16 @@ npm run dev -> change later into assuming production
 
 
 ## Teknologi yang digunakan 
-1. Node.js dengan Express framework sebagai framework Backend 
-2. Typescript untuk membantu type-safety ketika pemgembangan aplikasi
-3. PostgreSQL sebagai database 
-4. Prisma ORM sebagai ORM untuk mempermudah pengembangan fitur-fitur yang terkait langsung dengan database 
-5. Morgan untuk logging 
-6. Docker untuk menjalankan PostgreSQl. Hal ini lebih mudah dibandingkan menggunakan PostgreSQL secara native 
-7. Vitest untuk unit testing 
-8. JWT (jsonwebtoken) untuk membantu autentikasi user 
-9. Swagger (swagger-jsdoc + swagger-ui-express) untuk membantu dokumentasi serta testing API 
-10. bcryptjs (hashing) untuk melakukan hashing pada kredentials JWT 
+1. `Node.js` dengan Express framework sebagai framework Backend 
+2. `Typescript` untuk membantu type-safety ketika pemgembangan aplikasi
+3. `PostgreSQL` sebagai database 
+4. `Prisma ORM` sebagai ORM untuk mempermudah pengembangan fitur-fitur yang terkait langsung dengan database 
+5. `Morgan` untuk logging 
+6. `Docker` untuk menjalankan PostgreSQl. Hal ini lebih mudah dibandingkan menggunakan PostgreSQL secara native 
+7. `Vitest` untuk unit testing 
+8. `JWT` (jsonwebtoken) untuk membantu autentikasi user 
+9. `Swagger` (swagger-jsdoc + swagger-ui-express) untuk membantu dokumentasi serta testing API 
+`10.` bcryptjs (hashing) untuk melakukan hashing pada kredentials JWT 
 11. tsx untuk melakukan running kode typescript 
 
 
@@ -100,3 +100,5 @@ Berikut adalah asumsi-asumsi yang saya buat
 1. Saya melakukan normalization pada skema database yang dibuat menjadi 2 table yaitu User dan Presensi 
 2. Saya mengasumsikan penggunaan-pengunaan nantinya
 3. Timezone 
+4. Pagination 
+5. Asumsi urusan account-management bukan termasuk dalam scope pengembangan

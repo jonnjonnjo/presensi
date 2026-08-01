@@ -240,7 +240,7 @@ adminRouter.post("/attendance", async (req, res) => {
 
     const record = await prisma.presensi.create({
       data: data as Prisma.PresensiUncheckedCreateInput,
-      include: { karyawan: true },
+      include: { karyawan: { select: { id: true, name: true } } },
     })
     success(res, "Attendance created successfully", record, 201)
   } catch (err) {
