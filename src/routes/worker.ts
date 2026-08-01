@@ -158,6 +158,12 @@ workerRouter.post("/attendance", async (req, res) => {
     success(res, `Attendance recorded`, record, 201)
   } catch (err) {
     if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2002") {
+      const deletedExists = await prisma.presensi.count({
+        where: { karyawan_id: req.user.id, deleted_at: { not: null } },
+      })
+      if (deletedExists > 0) {
+        return fail(res, "A deleted record exists for this date. Restore it first.", undefined, 409)
+      }
       return fail(res, "Already checked-in for today", undefined, 409)
     }
     throw err;

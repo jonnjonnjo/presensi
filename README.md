@@ -113,3 +113,4 @@ Berikut adalah asumsi-asumsi yang saya buat
 7. Check-in Check-out on server or on client? 
 8. Assume that we are on WIB 
 9. Asumsi check-in check-out 1 hari 
+10. Unique[employee_id,attendance_date] bug with the soft-delete -> enforced by requiring one to restore it first

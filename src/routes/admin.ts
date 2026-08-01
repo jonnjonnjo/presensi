@@ -245,7 +245,15 @@ adminRouter.post("/attendance", async (req, res) => {
     success(res, "Attendance created successfully", record, 201)
   } catch (err) {
     if (err instanceof Prisma.PrismaClientKnownRequestError) {
-      if (err.code === "P2002") return fail(res, "Employee already has a record for this date", undefined, 409)
+      if (err.code === "P2002") {
+        const deletedExists = await prisma.presensi.count({
+          where: { karyawan_id: req.body.karyawan_id, deleted_at: { not: null } },
+        })
+        if (deletedExists > 0) {
+          return fail(res, "A deleted record exists for this date. Restore it first.", undefined, 409)
+        }
+        return fail(res, "Employee already has a record for this date", undefined, 409)
+      }
       if (err.code === "P2025") return fail(res, "Karyawan not found", undefined, 404)
     }
     throw err
