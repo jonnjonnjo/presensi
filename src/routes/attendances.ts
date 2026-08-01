@@ -216,7 +216,7 @@ attendanceRouter.delete("/:id", async (req, res) => {
     await prisma.recordPresensi.delete({
       where: { id }
     })
-    success(res, "Attendance deleted successfully", null, 204)
+    success(res, "Attendance deleted successfully", null, 200)
   } catch (err) {
     if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2025") {
       return fail(res, "Attendance not found", undefined, 404)
