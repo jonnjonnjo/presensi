@@ -3,7 +3,7 @@
 ## Cara Menjalankan 
 1. Clone repository ini terlebih dahulu 
 ```
-git clone git@github.com:jonnjonnjo/presensi.git
+git clone https://github.com/jonnjonnjo/presensi.git
 cd presensi
 ``` 
 
@@ -31,7 +31,7 @@ npx prisma db seed
 
 7. Jalankan server express tersebut 
 ``` 
-npm run dev -> change later into assuming production 
+npm run dev
 ```
 
 8. Buka dokumentasi swagger yang terdapat pada `localhost:6767/api-docs`
@@ -40,6 +40,13 @@ npm run dev -> change later into assuming production
 ```
 npx prisma studio
 ```
+
+10. Anda dapat mencoba menjalankan unit testing dengan menjalankan 
+```
+npm run test
+```
+
+
 ## Teknologi yang digunakan 
 1. `Node.js` dengan Express framework sebagai framework Backend 
 2. `Typescript` untuk membantu type-safety ketika pemgembangan aplikasi
