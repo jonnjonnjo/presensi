@@ -191,10 +191,18 @@ adminRouter.post("/attendance", async (req, res) => {
     const data: Record<string, unknown> = { karyawan_id, status }
     if (notes !== undefined) data.notes = notes
 
+    if (check_in && check_out) {
+      const checkin = new Date(`1970-01-01T${check_in}`)
+      const checkout = new Date(`1970-01-01T${check_out}`)
+
+      if (checkout.toDateString() < checkin.toDateString()) {
+        return fail(res, "Checkout time couldn't be more early than check-in time", undefined, 400)
+      }
+    }
+
     if (attendance_date) {
       data.attendance_date = new Date(attendance_date)
     }
-
     if (check_in) {
       data.check_in = new Date(`1970-01-01T${check_in}`)
     } else if (status === "PRESENT") {
@@ -204,6 +212,7 @@ adminRouter.post("/attendance", async (req, res) => {
     if (check_out) {
       data.check_out = new Date(`1970-01-01T${check_out}`)
     }
+
 
     const record = await prisma.presensi.create({
       data: data as Prisma.PresensiUncheckedCreateInput,
