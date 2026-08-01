@@ -77,8 +77,8 @@ prisma.config.ts
 ## Execution Order
 1. [x] MVP — flat schema (baseline branch)
 2. [x] Schema — normalize to Karyawan + Presensi → migrate → seed
-3. [ ] Auth — login, JWT middleware, role middleware
-4. [ ] Worker routes — check-in, check-out, attendance CRUD
+3. [x] Auth — login, JWT middleware, role middleware
+4. [x] Worker routes — check-in, check-out, attendance CRUD
 5. [ ] Admin routes — full CRUD on all records
 6. [ ] GET attendance — pagination, filtering, search, sorting
 7. [ ] Soft delete — deleted_at + restore endpoint

@@ -28,15 +28,15 @@ async function main() {
   })
 
   const workers = [
-    { name: "John Doe", email: "John@example.com" },
-    { name: "Jane Smith", email: "Jane@example.com" },
-    { name: "Alice Johnson", email: "Alice@example.com" },
-    { name: "Bob Brown", email: "Bob@example.com" },
-    { name: "Charlie Davis", email: "Charlie@example.com" },
-    { name: "Diana Evans", email: "Diana@example.com" },
-    { name: "Eve Wilson", email: "Eve@example.com" },
-    { name: "Frank Martinez", email: "Frank@example.com" },
-    { name: "Grace Lee", email: "Grace@example.com" },
+    { name: "John Doe", email: "john@example.com" },
+    { name: "Jane Smith", email: "jane@example.com" },
+    { name: "Alice Johnson", email: "alice@example.com" },
+    { name: "Bob Brown", email: "bob@example.com" },
+    { name: "Charlie Davis", email: "charlie@example.com" },
+    { name: "Diana Evans", email: "diana@example.com" },
+    { name: "Eve Wilson", email: "eve@example.com" },
+    { name: "Frank Martinez", email: "frank@example.com" },
+    { name: "Grace Lee", email: "grace@example.com" },
   ]
 
   for (const w of workers) {
