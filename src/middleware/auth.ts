@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import type { Request, Response, NextFunction } from "express"
 import { fail } from "../utils/response.js";
 
-const JWT_SECRET = process.env.JWT_SECRET || "dev-secret"
+import { JWT_SECRET } from "../env.js"
 
 export function authenticate(req: Request, res: Response, next: NextFunction) {
   const header = req.headers.authorization

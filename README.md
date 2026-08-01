@@ -1,8 +1,5 @@
 # Project 
 
-## Database Scheme
-![Database ERD](./assets/ERD.svg)
-
 ## Cara Menjalankan 
 1. Clone repository ini terlebih dahulu 
 ```
@@ -39,6 +36,14 @@ npm run dev -> change later into assuming production
 
 8. Buka dokumentasi swagger yang terdapat pada `localhost:6767/api-docs`
 
+9. Anda dapat pula menjalankan Prisma GUI untuk melihat detail database dengan menjalankan 
+```
+```
+
+npx prisma studio
+```
+```
+
 
 ## Teknologi yang digunakan 
 1. `Node.js` dengan Express framework sebagai framework Backend 
@@ -51,7 +56,7 @@ npm run dev -> change later into assuming production
 8. `JWT` (jsonwebtoken) untuk membantu autentikasi user 
 9. `Swagger` (swagger-jsdoc + swagger-ui-express) untuk membantu dokumentasi serta testing API 
 `10.` bcryptjs (hashing) untuk melakukan hashing pada kredentials JWT 
-11. tsx untuk melakukan running kode typescript 
+11. `tsx` untuk melakukan running kode typescript 
 
 
 ## Struktur Direktori 
@@ -93,6 +98,13 @@ npm run dev -> change later into assuming production
 
 ## Penjelasan Desain Aplikasi 
 
+### Database Scheme
+![Database ERD](./assets/ERD.svg)
+
+### System Design 
+
+### What else? 
+
 ## Kendala yang ditemui 
 Berdasarkan 
 Kebanyakan kendala-kendala yang saya temui hanyalah berdasarkan pada hal-hal yang tidak disebutkan secara eksplisit pada dokumen technical test. 
@@ -102,3 +114,4 @@ Berikut adalah asumsi-asumsi yang saya buat
 3. Timezone 
 4. Pagination 
 5. Asumsi urusan account-management bukan termasuk dalam scope pengembangan
+6. Logging details 
