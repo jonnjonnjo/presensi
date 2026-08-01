@@ -110,3 +110,6 @@ Berikut adalah asumsi-asumsi yang saya buat
 4. Pagination 
 5. Asumsi urusan account-management bukan termasuk dalam scope pengembangan
 6. Logging details 
+7. Check-in Check-out on server or on client? 
+8. Assume that we are on WIB 
+9. Asumsi check-in check-out 1 hari 

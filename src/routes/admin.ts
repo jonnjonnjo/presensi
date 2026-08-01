@@ -219,7 +219,7 @@ adminRouter.post("/attendance", async (req, res) => {
       const checkin = new Date(`1970-01-01T${check_in}`)
       const checkout = new Date(`1970-01-01T${check_out}`)
 
-      if (checkout.toDateString() < checkin.toDateString()) {
+      if (checkout < checkin) {
         return fail(res, "Checkout time couldn't be more early than check-in time", undefined, 400)
       }
     }
