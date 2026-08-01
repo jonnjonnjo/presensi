@@ -8,7 +8,16 @@ export const swaggerSpec = swaggerJSDoc({
       version: "1.0.0",
       description: "REST API for employee attendance"
     },
-    servers: [{ url: "http://localhost:6767" }]
+    servers: [{ url: "http://localhost:6767" }],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
   },
   apis: ["./src/routes/*.ts"]
 })

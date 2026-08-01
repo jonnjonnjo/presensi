@@ -6,6 +6,20 @@ import { Prisma, StatusPresensi } from "../generated/prisma/client.js";
 export const workerRouter = Router()
 const ALLOWED_STATUS = Object.values(StatusPresensi) as readonly string[]
 
+/**
+ * @openapi
+ * /check-in:
+ *   post:
+ *     summary: Check in (create PRESENT record)
+ *     tags: [Worker]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       201:
+ *         description: Check-in successful
+ *       409:
+ *         description: Already checked in today
+ */
 workerRouter.post("/check-in", async (req, res) => {
   try {
 
@@ -26,7 +40,29 @@ workerRouter.post("/check-in", async (req, res) => {
   }
 })
 
-
+/**
+ * @openapi
+ * /attendance/{id}/check-out:
+ *   post:
+ *     summary: Check out (set check_out time)
+ *     tags: [Worker]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string }
+ *     responses:
+ *       200:
+ *         description: Check-out recorded
+ *       403:
+ *         description: Not your record
+ *       404:
+ *         description: Not found
+ *       422:
+ *         description: Already checked out or wrong date
+ */
 workerRouter.post("/attendance/:id/check-out", async (req, res) => {
   try {
     const id = req.params.id as string
@@ -69,6 +105,35 @@ workerRouter.post("/attendance/:id/check-out", async (req, res) => {
   }
 })
 
+/**
+ * @openapi
+ * /attendance:
+ *   post:
+ *     summary: Submit non-PRESENT attendance (SICK, LEAVE, ABSENT)
+ *     tags: [Worker]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [status]
+ *             properties:
+ *               status:
+ *                 type: string
+ *                 enum: [SICK, LEAVE, ABSENT]
+ *               notes:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Created
+ *       409:
+ *         description: Already submitted today
+ *       422:
+ *         description: Validation failed
+ */
 workerRouter.post("/attendance", async (req, res) => {
   try {
     const { status, notes } = req.body;
@@ -96,6 +161,41 @@ workerRouter.post("/attendance", async (req, res) => {
   }
 })
 
+/**
+ * @openapi
+ * /attendance/{id}:
+ *   put:
+ *     summary: Update own attendance record
+ *     tags: [Worker]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string }
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               status:
+ *                 type: string
+ *                 enum: [PRESENT, SICK, LEAVE, ABSENT]
+ *               notes:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: OK
+ *       403:
+ *         description: Not your record
+ *       404:
+ *         description: Not found
+ *       422:
+ *         description: Validation failed
+ */
 workerRouter.put("/attendance/:id", async (req, res) => {
   try {
 
@@ -151,6 +251,40 @@ workerRouter.put("/attendance/:id", async (req, res) => {
   }
 })
 
+/**
+ * @openapi
+ * /attendance:
+ *   get:
+ *     summary: List own attendance records
+ *     tags: [Worker]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema: { type: integer, default: 1 }
+ *       - in: query
+ *         name: limit
+ *         schema: { type: integer, default: 10, maximum: 100 }
+ *       - in: query
+ *         name: status
+ *         schema: { type: string, enum: [PRESENT, SICK, LEAVE, ABSENT] }
+ *       - in: query
+ *         name: start_date
+ *         schema: { type: string, format: date }
+ *       - in: query
+ *         name: end_date
+ *         schema: { type: string, format: date }
+ *       - in: query
+ *         name: sort_by
+ *         schema: { type: string, enum: [attendance_date, check_in, check_out, status, created_at] }
+ *       - in: query
+ *         name: order
+ *         schema: { type: string, enum: [asc, desc], default: desc }
+ *     responses:
+ *       200:
+ *         description: OK
+ */
 workerRouter.get("/attendance", async (req, res) => {
 
   try {
@@ -208,6 +342,27 @@ workerRouter.get("/attendance", async (req, res) => {
   }
 })
 
+/**
+ * @openapi
+ * /attendance/{id}:
+ *   get:
+ *     summary: Get own attendance record by ID
+ *     tags: [Worker]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string }
+ *     responses:
+ *       200:
+ *         description: OK
+ *       403:
+ *         description: Not your record
+ *       404:
+ *         description: Not found
+ */
 workerRouter.get("/attendance/:id", async (req, res) => {
   try {
     const id = req.params.id as string

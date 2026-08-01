@@ -6,7 +6,55 @@ import { success, fail } from "../utils/response.js"
 export const adminRouter = Router()
 const ALLOWED_STATUS = Object.values(StatusPresensi) as readonly string[]
 
-// GET /admin/attendance
+/**
+ * @openapi
+ * /admin/attendance:
+ *   get:
+ *     summary: List all attendance records (admin)
+ *     tags: [Admin]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema: { type: integer, default: 1 }
+ *       - in: query
+ *         name: limit
+ *         schema: { type: integer, default: 10, maximum: 100 }
+ *       - in: query
+ *         name: status
+ *         schema: { type: string, enum: [PRESENT, SICK, LEAVE, ABSENT] }
+ *       - in: query
+ *         name: start_date
+ *         schema: { type: string, format: date }
+ *       - in: query
+ *         name: end_date
+ *         schema: { type: string, format: date }
+ *       - in: query
+ *         name: sort_by
+ *         schema: { type: string, enum: [attendance_date, check_in, check_out, status, created_at] }
+ *       - in: query
+ *         name: order
+ *         schema: { type: string, enum: [asc, desc], default: desc }
+ *       - in: query
+ *         name: search
+ *         description: Search by employee name
+ *         schema: { type: string }
+ *       - in: query
+ *         name: karyawan_id
+ *         schema: { type: string }
+ *       - in: query
+ *         name: show_deleted
+ *         description: Include soft-deleted records
+ *         schema: { type: string, enum: ["true"] }
+ *     responses:
+ *       200:
+ *         description: OK
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
+ */
 adminRouter.get("/attendance", async (req, res) => {
   try {
     const page = Math.max(1, parseInt(req.query.page as string) || 1)
@@ -60,7 +108,25 @@ adminRouter.get("/attendance", async (req, res) => {
   }
 })
 
-// GET /admin/attendance/:id
+/**
+ * @openapi
+ * /admin/attendance/{id}:
+ *   get:
+ *     summary: Get attendance by ID (admin)
+ *     tags: [Admin]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string }
+ *     responses:
+ *       200:
+ *         description: OK
+ *       404:
+ *         description: Not found
+ */
 adminRouter.get("/attendance/:id", async (req, res) => {
   try {
     const record = await prisma.presensi.findUnique({
@@ -74,7 +140,46 @@ adminRouter.get("/attendance/:id", async (req, res) => {
   }
 })
 
-// POST /admin/attendance
+/**
+ * @openapi
+ * /admin/attendance:
+ *   post:
+ *     summary: Create attendance record (admin)
+ *     tags: [Admin]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [karyawan_id, status]
+ *             properties:
+ *               karyawan_id:
+ *                 type: string
+ *               status:
+ *                 type: string
+ *                 enum: [PRESENT, SICK, LEAVE, ABSENT]
+ *               attendance_date:
+ *                 type: string
+ *                 format: date
+ *               check_in:
+ *                 type: string
+ *                 format: time
+ *               check_out:
+ *                 type: string
+ *                 format: time
+ *               notes:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Created
+ *       409:
+ *         description: Duplicate record
+ *       422:
+ *         description: Validation failed
+ */
 adminRouter.post("/attendance", async (req, res) => {
   try {
     const { karyawan_id, status, notes, attendance_date, check_in, check_out } = req.body
@@ -114,7 +219,39 @@ adminRouter.post("/attendance", async (req, res) => {
   }
 })
 
-// PUT /admin/attendance/:id
+/**
+ * @openapi
+ * /admin/attendance/{id}:
+ *   put:
+ *     summary: Update attendance record (admin)
+ *     tags: [Admin]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string }
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               status:
+ *                 type: string
+ *                 enum: [PRESENT, SICK, LEAVE, ABSENT]
+ *               notes:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: OK
+ *       404:
+ *         description: Not found
+ *       422:
+ *         description: Validation failed
+ */
 adminRouter.put("/attendance/:id", async (req, res) => {
   try {
     const { status, notes } = req.body
@@ -147,7 +284,25 @@ adminRouter.put("/attendance/:id", async (req, res) => {
   }
 })
 
-// DELETE /admin/attendance/:id
+/**
+ * @openapi
+ * /admin/attendance/{id}:
+ *   delete:
+ *     summary: Soft-delete attendance record (admin)
+ *     tags: [Admin]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string }
+ *     responses:
+ *       200:
+ *         description: Deleted
+ *       404:
+ *         description: Not found
+ */
 adminRouter.delete("/attendance/:id", async (req, res) => {
   try {
     const existing = await prisma.presensi.findUnique({ where: { id: req.params.id } })
@@ -159,7 +314,27 @@ adminRouter.delete("/attendance/:id", async (req, res) => {
   }
 })
 
-// POST /admin/attendance/:id/restore
+/**
+ * @openapi
+ * /admin/attendance/{id}/restore:
+ *   post:
+ *     summary: Restore soft-deleted attendance (admin)
+ *     tags: [Admin]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: string }
+ *     responses:
+ *       200:
+ *         description: Restored
+ *       404:
+ *         description: Not found
+ *       422:
+ *         description: Not deleted
+ */
 adminRouter.post("/attendance/:id/restore", async (req, res) => {
   try {
     const existing = await prisma.presensi.findUnique({ where: { id: req.params.id } })

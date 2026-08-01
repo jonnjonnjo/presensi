@@ -9,6 +9,39 @@ const JWT_SECRET = process.env.JWT_SECRET || "dev-secret"
 
 export const authRouter = Router()
 
+/**
+ * @openapi
+ * /auth/login:
+ *   post:
+ *     summary: Login
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [email, password]
+ *             properties:
+ *               email: { type: string, format: email }
+ *               password: { type: string }
+ *     responses:
+ *       200:
+ *         description: Login successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success: { type: boolean }
+ *                 message: { type: string }
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     token: { type: string }
+ *       401:
+ *         description: Invalid credentials
+ */
 authRouter.post("/login", async (req, res) => {
   const { email, password } = req.body
   const user = await prisma.karyawan.findUnique({ where: { email } })

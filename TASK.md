@@ -25,8 +25,6 @@
 | PUT | `/attendance/:id` | Yes | `{ status?, notes? }` | Updates own record |
 | GET | `/attendance` | Yes | query params | Paginated, filterable, searchable |
 | GET | `/attendance/:id` | Yes | — | Get own record |
-| DELETE | `/attendance/:id` | Yes | — | Soft delete |
-| POST | `/attendance/:id/restore` | Yes | — | Restore deleted record |
 
 ### Admin
 | Method | Endpoint | Auth | Body |
@@ -56,8 +54,8 @@
 src/
   middleware/
     auth.ts          — JWT verification
-    roles.ts         — requireRole(ADMIN), requireSelf()
-    validate.ts      — input validation
+    roles.ts         — requireRole(ADMIN)
+    validate.ts      — input validation (legacy, unused)
   routes/
     auth.ts          — POST /auth/login
     worker.ts        — worker endpoints
@@ -66,6 +64,8 @@ src/
     response.ts      — success() / fail() helpers
   lib/
     prisma.ts        — PrismaClient singleton
+  types/
+    express.d.ts     — req.user type augmentation
   app.ts             — Express entry point
   swagger.ts         — OpenAPI spec
 prisma/
@@ -79,9 +79,9 @@ prisma.config.ts
 2. [x] Schema — normalize to Karyawan + Presensi → migrate → seed
 3. [x] Auth — login, JWT middleware, role middleware
 4. [x] Worker routes — check-in, check-out, attendance CRUD
-5. [ ] Admin routes — full CRUD on all records
-6. [ ] GET attendance — pagination, filtering, search, sorting
-7. [ ] Soft delete — deleted_at + restore endpoint
+5. [x] Admin routes — full CRUD on all records
+6. [x] GET attendance — pagination, filtering, search, sorting
+7. [x] Soft delete — deleted_at + restore endpoint
 8. [ ] Morgan logging
-9. [ ] Swagger annotations
+9. [x] Swagger annotations
 10. [ ] Unit tests (Vitest)
