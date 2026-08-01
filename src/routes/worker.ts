@@ -68,7 +68,7 @@ workerRouter.post("/attendance/:id/check-out", async (req, res) => {
     const id = req.params.id as string
     const check_out = new Date()
     const existing_record = await prisma.presensi.findUnique({
-      where: { id }
+      where: { id, deleted_at: null }
     })
 
     if (!existing_record) {
@@ -87,6 +87,10 @@ workerRouter.post("/attendance/:id/check-out", async (req, res) => {
       return fail(res, "The attendance check-out has been recorded", undefined, 422)
     }
 
+    if (existing_record.status !== "PRESENT") {
+      return fail(res, "Only PRESENT records can be checked out", undefined, 422)
+    }
+
     const record = await prisma.presensi.update({
       where: {
         id
@@ -98,9 +102,6 @@ workerRouter.post("/attendance/:id/check-out", async (req, res) => {
 
     success(res, "Attendance's check-out recorded", record, 200)
   } catch (err) {
-    if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2025") {
-      return fail(res, "Attendance not found", undefined, 404)
-    }
     throw err
   }
 })

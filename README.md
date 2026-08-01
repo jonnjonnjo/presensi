@@ -38,13 +38,8 @@ npm run dev -> change later into assuming production
 
 9. Anda dapat pula menjalankan Prisma GUI untuk melihat detail database dengan menjalankan 
 ```
-```
-
 npx prisma studio
 ```
-```
-
-
 ## Teknologi yang digunakan 
 1. `Node.js` dengan Express framework sebagai framework Backend 
 2. `Typescript` untuk membantu type-safety ketika pemgembangan aplikasi
